@@ -1,7 +1,5 @@
 Function Set-WallPaper {
- 
 <#
- 
     .SYNOPSIS
     Applies a specified wallpaper to the current user's desktop
     
@@ -17,14 +15,12 @@ Function Set-WallPaper {
 
     .LINK
     https://www.joseespitia.com/2017/09/15/set-wallpaper-powershell-function/
-  
 #>
  
 param (
     [parameter(Mandatory=$True)]
-    # Provide path to image
     [string]$Image,
-    # Provide wallpaper style that you would like applied
+    
     [parameter(Mandatory=$False)]
     [ValidateSet('Fill', 'Fit', 'Stretch', 'Tile', 'Center', 'Span')]
     [string]$Style
