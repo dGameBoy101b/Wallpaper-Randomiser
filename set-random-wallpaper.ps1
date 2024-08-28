@@ -33,7 +33,7 @@ Function Set-RandomWallpaper
 	)
 
 	. .\select-files-by-kind.ps1
-	$wallpapers = Get-ChildItem -Path $Path -Recurse -Name | Select-FilesByKind -Kind "*Image"
+	$wallpapers = Get-ChildItem -Path $Path -Recurse -Name -File | Select-FilesByKind -Kind "*Image"
 
 	$wallpaper = Get-Random -InputObject $wallpapers
 
