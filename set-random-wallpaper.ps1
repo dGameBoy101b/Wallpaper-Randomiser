@@ -34,13 +34,17 @@ Function Set-RandomWallpaper
 
 	. .\select-files-by-kind.ps1
 	$wallpapers = Get-ChildItem -Path $Path -Recurse -Name -File | Select-FilesByKind -Kind "*Image"
+	Write-Debug "found wallpapers: $wallpapers"
 
 	$wallpaper = Get-Random -InputObject $wallpapers
+	Write-Debug "randomly selected wallpaper: $wallpaper"
 
 	$path = ((Join-Path $Path $wallpaper) | Resolve-Path).Path
+	Write-Debug "resolved wallpaper path: $path"
 
 	. .\set-wallpaper.ps1
 	Set-WallPaper -Image $path -Style $Style
+	Write-Debug "set wallpaper with style: $Style"
 
 	return $path
 }
