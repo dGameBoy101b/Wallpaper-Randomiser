@@ -8,6 +8,7 @@ Function Select-FilesByKind {
 
 	.EXAMPLE
 	Get-ChildItem -Path C:\Pictures -Name | Select-FilesByType -Kind *image
+	Outputs the names of all image files (e.g. .png, .jpg, etc) in the "Pictures" directory.
 
 	.INPUTS
 	The file paths to filter
@@ -20,7 +21,7 @@ Function Select-FilesByKind {
 	#>
 
 	param (
-		[parameter(Mandatory)]
+		[parameter(Mandatory, SupportsWildcards)]
 		[string]$Kind,
 		[parameter(Mandatory, ValueFromPipeline)]
 		[string[]]$Paths

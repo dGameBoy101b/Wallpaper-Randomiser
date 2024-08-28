@@ -12,8 +12,12 @@ Function Set-RandomWallpaper
 	The style used for the new wallpaper
 
 	.EXAMPLE
-	Randomise-Wallpaper -Path .
 	Randomise-Wallpaper -Path C:\Pictures\Wallpapers
+	Picks an image from the Wallpapers directory and sets it as the current user's wallpaper
+
+	.EXAMPLE
+	Randomise-Wallpaper -Path C:\Pictures\Wallpapers -Style Fit
+	Picks an image from the Wallpapers directory and sets it as the current user's wallpaper using the fit style which may result in black bars around it
 
 	.OUTPUTS
 	Path to the set wallpaper
