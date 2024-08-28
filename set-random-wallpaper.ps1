@@ -32,7 +32,10 @@ Function Set-RandomWallpaper
 		[string]$Style = "Fill"
 	)
 
-	. .\select-files-by-kind.ps1
+	$ScriptDirectory = Split-Path -Parent $PSCommandPath
+	Write-Debug "script directory: $ScriptDirectory"
+
+	. (Join-Path $ScriptDirectory "select-files-by-kind.ps1")
 	$wallpapers = Get-ChildItem -Path $Path -Recurse -Name -File | Select-FilesByKind -Kind "*Image"
 	Write-Debug "found wallpapers: $wallpapers"
 
@@ -42,7 +45,7 @@ Function Set-RandomWallpaper
 	$path = ((Join-Path $Path $wallpaper) | Resolve-Path).Path
 	Write-Debug "resolved wallpaper path: $path"
 
-	. .\set-wallpaper.ps1
+	. (Join-Path $ScriptDirectory "set-wallpaper.ps1")
 	Set-WallPaper -Image $path -Style $Style
 	Write-Debug "set wallpaper with style: $Style"
 
