@@ -21,7 +21,8 @@ Function Select-FilesByKind {
 	#>
 
 	param (
-		[parameter(Mandatory, SupportsWildcards)]
+		[parameter(Mandatory)]
+		[SupportsWildcards()]
 		[string]$Kind,
 		[parameter(Mandatory, ValueFromPipeline)]
 		[string[]]$Paths
