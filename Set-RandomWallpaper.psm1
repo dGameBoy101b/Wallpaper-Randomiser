@@ -31,7 +31,8 @@ Function Set-RandomWallpaper
 		[string]$Style = "Fill"
 	)
 
-	Import-Module .\Select-FilesByKind.psm1
+	Import-Module $PSScriptRoot/Select-FilesByKind.psm1
+	Write-Debug "searching for wallpapers: $Path"
 	$wallpapers = Get-ChildItem -Path $Path -Recurse -Name -File | Select-FilesByKind -Kind "*Image"
 	Write-Debug "found wallpapers: $wallpapers"
 
@@ -41,7 +42,7 @@ Function Set-RandomWallpaper
 	$path = ((Join-Path $Path $wallpaper) | Resolve-Path).Path
 	Write-Debug "resolved wallpaper path: $path"
 
-	Import-Module .\Set-Wallpaper.psm1
+	Import-Module $PSScriptRoot/Set-Wallpaper.psm1
 	Set-WallPaper -Image $path -Style $Style
 	Write-Debug "set wallpaper with style: $Style"
 
