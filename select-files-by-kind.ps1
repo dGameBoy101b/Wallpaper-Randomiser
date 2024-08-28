@@ -6,14 +6,14 @@ Function Select-FilesByKind {
 	.PARAMETER Kind
 	The filetype pattern to match
 
-	.PARAMETER Paths
-	The file paths to filter
-
 	.EXAMPLE
 	Get-ChildItem -Path C:\Pictures -Name | Select-FilesByType -Kind *image
 
+	.INPUTS
+	The file paths to filter
+
 	.OUTPUTS
-	The filtered output
+	The files paths that match the kind pattern
 
 	.LINK
 	https://www.reddit.com/r/PowerShell/comments/hchq59/comment/fvfd5fg/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
@@ -42,7 +42,7 @@ Function Select-FilesByKind {
 			Write-Debug "kind pattern: $Kind"
 			if ($path_kind -like $Kind)
 			{
-				Write-Object $path
+				Write-Output $path
 			}
 		}
 	}
