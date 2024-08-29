@@ -1,4 +1,4 @@
-Function Set-WallPaper {
+Function Set-Wallpaper {
 <#
     .SYNOPSIS
     Applies a specified wallpaper to the current user's desktop
@@ -18,37 +18,28 @@ Function Set-WallPaper {
 #>
  
 param (
-    [parameter(Mandatory=$True)]
+    [parameter(Mandatory)]
     [string]$Image,
     
-    [parameter(Mandatory=$False)]
     [ValidateSet('Fill', 'Fit', 'Stretch', 'Tile', 'Center', 'Span')]
     [string]$Style
 )
  
 $WallpaperStyle = Switch ($Style) {
-  
     "Fill" {"10"}
     "Fit" {"6"}
     "Stretch" {"2"}
     "Tile" {"0"}
     "Center" {"0"}
     "Span" {"22"}
-  
 }
- 
-If($Style -eq "Tile") {
- 
-    New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -PropertyType String -Value $WallpaperStyle -Force
-    New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -PropertyType String -Value 1 -Force
- 
-}
-Else {
- 
-    New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -PropertyType String -Value $WallpaperStyle -Force
-    New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -PropertyType String -Value 0 -Force
- 
-}
+Write-Debug "wallpaper style mapped: $Style -> $WallpaperStyle"
+$tile = if ($Style -eq "Tile") {1} else {0}
+
+$null = New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -PropertyType String -Value $WallpaperStyle -Force
+Write-Debug "set wallpaper style: $WallpaperStyle"
+$null = New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name TileWallpaper -PropertyType String -Value $tile -Force
+Write-Debug "set wallpaper tiling: $tile"
  
 Add-Type -TypeDefinition @" 
 using System; 
@@ -70,5 +61,6 @@ public class Params
   
     $fWinIni = $UpdateIniFile -bor $SendChangeEvent
   
-    $ret = [Params]::SystemParametersInfo($SPI_SETDESKWALLPAPER, 0, $Image, $fWinIni)
+    Write-Debug "setting wallpaper: $Image"
+    $null = [Params]::SystemParametersInfo($SPI_SETDESKWALLPAPER, 0, $Image, $fWinIni)
 }
